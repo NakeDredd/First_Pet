@@ -1,3 +1,5 @@
 #Ignore local model files
 AGENTS.md
 Docs
+k8s_cluster.tfvars
+.terraform
