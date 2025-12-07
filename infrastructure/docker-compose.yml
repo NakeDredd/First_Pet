@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  date-server:
+    build: ./services/date-server
+    ports:
+      - "5000:5000"
+    networks:
+      microservices-network:
+        aliases:
+          - date-server
+
+  timezone-converter:
+    build: ./services/timezone-converter
+    ports:
+      - "5001:5001"
+    networks:
+      microservices-network:
+        aliases:
+          - converter
+
+  public-endpoint:
+    build: ./services/public-endpoint
+    ports:
+      - "5002:5002"
+    depends_on:
+      - date-server
+      - timezone-converter
+    networks:
+      microservices-network:
+        aliases:
+          - public-endpoint
+
+networks:
+  microservices-network:
+    driver: bridge
