@@ -1,10 +1,10 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.opentofu.org/banzaicloud/k8s" {
-  version     = "0.9.1"
-  constraints = ">= 0.8.0"
+provider "registry.opentofu.org/hashicorp/kubernetes" {
+  version     = "3.0.0"
+  constraints = ">= 0.9.1"
   hashes = [
-    "h1:aIf8hfER2saUIh5Vh7J+ZESRwp3/HlZshBzNhqC1i0Y=",
+    "h1:yGjUJb660AgjBQiNvsq1mnnf/1FW5w+tjnpDCrAsJuU=",
   ]
 }

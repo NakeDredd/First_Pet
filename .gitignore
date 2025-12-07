@@ -3,3 +3,6 @@ AGENTS.md
 Docs
 k8s_cluster.tfvars
 .terraform
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
