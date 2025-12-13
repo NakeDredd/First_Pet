@@ -20,12 +20,14 @@ services:
       - $GITLAB_HOME/runners/docker/config:/home/gitlab-runner/config
       - $GITLAB_HOME/runners/docker/logs:/home/gitlab-runner/logs
       - $GITLAB_HOME/runners/docker/data:/home/gitlab-runner/data
+      - .:/builds
     environment:
       - CI_SERVER_URL=gitlab-server
       - RUNNER_NAME=runner-docker
       - RUNNER_EXECUTOR=docker
+      - RUNNER_PRE_START_COMMANDS=gitlab-runner verify
     ports:
-      - "9001:9000"
+      - "9000:9000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
       interval: 10s
