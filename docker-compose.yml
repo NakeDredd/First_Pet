@@ -1,38 +1,15 @@
-
-services: 
-  date-server:
-    build: 
-      context: ./services/date-server
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    command: ["sh", "-c", "cat /etc/gitlab/initial_root_password"]
+    restart: always
     ports:
-      - "5000:5000"
-    networks:
-      microservices-network:
-        aliases:
-          - date-server
-
-  timezone-converter:
-    build: 
-      context: ./services/timezone-converter
-    ports:
-      - "5001:5001"
-    networks:
-      microservices-network:
-        aliases:
-          - converter
-
-  public-endpoint:
-    build: 
-      context: ./services/public-endpoint
-    ports:
-      - "5002:5002"
-    depends_on:
-      - date-server
-      - timezone-converter
-    networks:
-      microservices-network:
-        aliases:
-          - public-endpoint
-
-networks:
-  microservices-network:
-    driver: bridge
+      - '80:80'
+      - '443:443'
+      - '22:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'

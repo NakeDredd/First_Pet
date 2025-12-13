@@ -6,3 +6,6 @@ k8s_cluster.tfvars
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
+gitlab/config
+gitlab/data
+gitlab/logs
