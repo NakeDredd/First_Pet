@@ -13,23 +13,14 @@ services:
       - '$GITLAB_HOME/logs:/var/log/gitlab'
       - '$GITLAB_HOME/data:/var/opt/gitlab'
     shm_size: '256m'
+  
   gitlab-runner-docker:
-    image: gitlab/gitlab-runner
+    image: gitlab/gitlab-runner:latest
     container_name: gitlab-runner-docker
+    restart: always
+    privileged: true
     volumes:
-      - $GITLAB_HOME/runners/docker/config:/home/gitlab-runner/config
-      - $GITLAB_HOME/runners/docker/logs:/home/gitlab-runner/logs
-      - $GITLAB_HOME/runners/docker/data:/home/gitlab-runner/data
-      - .:/builds
-    environment:
-      - CI_SERVER_URL=gitlab-server
-      - RUNNER_NAME=runner-docker
-      - RUNNER_EXECUTOR=docker
-      - RUNNER_PRE_START_COMMANDS=gitlab-runner verify
-    ports:
-      - "9000:9000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - $GITLAB_HOME/runner/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - gitlab-server
