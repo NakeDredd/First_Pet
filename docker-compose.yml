@@ -2,7 +2,6 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab
-    command: ["sh", "-c", "cat /etc/gitlab/initial_root_password"]
     restart: always
     ports:
       - '80:80'
