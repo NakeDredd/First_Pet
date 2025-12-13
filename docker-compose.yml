@@ -1,8 +1,9 @@
 services:
-  gitlab:
+  gitlab-server:
     image: gitlab/gitlab-ce:latest
-    container_name: gitlab
+    container_name: gitlab-server
     restart: always
+    hostname: localhost
     ports:
       - '80:80'
       - '443:443'
@@ -12,3 +13,21 @@ services:
       - '$GITLAB_HOME/logs:/var/log/gitlab'
       - '$GITLAB_HOME/data:/var/opt/gitlab'
     shm_size: '256m'
+  gitlab-runner-docker:
+    image: gitlab/gitlab-runner
+    container_name: gitlab-runner-docker
+    volumes:
+      - $GITLAB_HOME/runners/docker/config:/home/gitlab-runner/config
+      - $GITLAB_HOME/runners/docker/logs:/home/gitlab-runner/logs
+      - $GITLAB_HOME/runners/docker/data:/home/gitlab-runner/data
+    environment:
+      - CI_SERVER_URL=gitlab-server
+      - RUNNER_NAME=runner-docker
+      - RUNNER_EXECUTOR=docker
+    ports:
+      - "9001:9000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
