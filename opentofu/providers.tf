@@ -3,21 +3,24 @@ terraform {
 
   required_providers {
     kubernetes = {
-        source  = "hashicorp/kubernetes"
+      source = "hashicorp/kubernetes"
     }
     helm = {
-        source = "hashicorp/helm"
+      source = "hashicorp/helm"
+    }
+    time = {
+      source = "hashicorp/time"
     }
   }
 }
-provider kubernetes {
-    config_path = "~/.kube/config"
-    config_context = "first-pet"
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "first-pet"
 }
 
-provider helm {
-    kubernetes {
-        config_path = "~/.kube/config"
-        config_context = "first-pet"
-    }
+provider "helm" {
+  kubernetes = {
+    config_path    = "~/.kube/config"
+    config_context = "first-pet"
   }
+}

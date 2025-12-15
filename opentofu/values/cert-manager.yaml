@@ -1,6 +1,4 @@
 installCRDs: true
-webhook:
-  enabled: false
 prometheus:
   enabled: false
 serviceAccount:

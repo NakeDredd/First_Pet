@@ -14,3 +14,10 @@ provider "registry.opentofu.org/hashicorp/kubernetes" {
     "h1:idu+cVjePQ4hnl7zlOio+h1Gc5tQybs9KgPKWmyRd/A=",
   ]
 }
+
+provider "registry.opentofu.org/hashicorp/time" {
+  version = "0.13.1"
+  hashes = [
+    "h1:ueilLAoXlZPufdJYuPFeqznwP39ZwLsRcQtqow+NUiI=",
+  ]
+}
