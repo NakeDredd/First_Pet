@@ -5,7 +5,6 @@ k8s_cluster.tfvars
 .terraform
 *.tfstate
 *.tfstate.backup
-.terraform.lock.hcl
 gitlab/config
 gitlab/data
 gitlab/logs
