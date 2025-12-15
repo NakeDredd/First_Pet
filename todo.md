@@ -1,7 +1,7 @@
 
 Configure Minikube with Terraform {cm:2025-12-16}
 Install nginx-ingress via Helm/Terraform {cm:2025-12-16}
-Install cert-manager for TLS
+Install cert-manager for TLS {cm:2025-12-16}
 Setup storage provisioner
 
 
