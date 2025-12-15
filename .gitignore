@@ -3,6 +3,7 @@ AGENTS.md
 Docs
 k8s_cluster.tfvars
 .terraform
+.vscode
 *.tfstate
 *.tfstate.backup
 gitlab/config
