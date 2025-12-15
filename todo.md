@@ -1,9 +1,25 @@
-1. Namespace {cm:2025-12-15}
-2. Storage (4 PVC: postgres, redis, gitlab)
-3. Secret + ConfigMap
-4. PostgreSQL
-5. Redis  
-6. GitLab
-7. Services (gitlab, registry)
-8. GitLab Runner
-9. Registry
+
+Configure Minikube with Terraform
+Install nginx-ingress via Helm/Terraform
+Install cert-manager for TLS
+Setup storage provisioner
+
+
+Deploy GitLab via official Helm chart
+Configure GitLab CI/CD
+Setup Docker Registry
+
+
+Implement Kafka in microservices
+Create Kubernetes manifests for microservices
+Setup GitLab CI/CD pipelines for microservices
+
+
+Deploy Prometheus Stack via Helm
+Setup Grafana dashboards
+Deploy ELK Stack via Helm
+
+
+Implement Ansible for configuration management
+Document everything
+Create demo scenarios
