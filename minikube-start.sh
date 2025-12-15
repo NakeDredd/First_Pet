@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 minikube start \
   --cpus=4 \
