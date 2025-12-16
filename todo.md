@@ -5,7 +5,7 @@ Install cert-manager for TLS {cm:2025-12-16}
 Setup storage provisioner {cm:2025-12-16}
 
 
-Deploy GitLab via official Helm chart
+Deploy GitLab via official Helm chart {cm:2025-12-16}
 Configure GitLab CI/CD
 Setup Docker Registry
 
