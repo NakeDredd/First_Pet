@@ -1,38 +1,22 @@
-resource "kubernetes_namespace_v1" "cert_manager" {
+#gitlab server and runner
+resource "kubernetes_namespace_v1" "gitlab" {
   metadata {
-    name = "cert-manager"
+    name = "gitlab"
   }
 }
+resource "helm_release" "gitlab" {
+  depends_on = [ 
+    kubernetes_namespace_v1.gitlab,
+    # kubernetes_manifest.selfsigned_issuer
+    ]
 
-resource "helm_release" "cert_manager" {
-  depends_on = [kubernetes_namespace_v1.cert_manager]
-  name       = "cert-manager"
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  namespace  = kubernetes_namespace_v1.cert_manager.metadata[0].name
+  name = "gitlab"
+  repository = "https://charts.gitlab.io/"
+  chart = "gitlab"
+  namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
 
   values = [
-    file("${path.module}/values/cert-manager.yaml")
+    file("${path.module}/values/gitlab.yaml")
   ]
-}
-
-resource "time_sleep" "wait_for_crds" {
-  depends_on = [helm_release.cert_manager]
-
-  create_duration = "30s" # waiting for CRD to create
-}
-
-resource "kubernetes_manifest" "selfsigned_issuer" {
-  depends_on = [time_sleep.wait_for_crds]
-
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "ClusterIssuer"
-    metadata = {
-      name = "selfsigned-issuer"
-    }
-    spec = {
-      selfSigned = {}
-    }
-  }
+  timeout = 600
 }

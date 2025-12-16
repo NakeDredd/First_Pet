@@ -1,0 +1,60 @@
+global:
+  hosts:
+    domain: gitlab.local
+    https: false
+  ingress:
+    enabled: true
+    configureCertmanager: true
+    certmanager:
+      clusterIssuer: selfsigned-issuer
+    annotations:
+      cert-manager.io/cluster-issuer: "selfsigned-issuer"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+
+postgresql:
+  primary:
+    # Explicitly specify the use of CSI Hostpath
+    persistence:
+      storageClass: "csi-hostpath-sc"
+    # Security settings for working with rights
+    podSecurityContext:
+      fsGroup: 1001
+    containerSecurityContext:
+      runAsUser: 1001
+#Workaround with emptydir. Redis will not have persistant data
+redis:
+  master:
+    persistence:
+      enabled: false  
+    master:
+      extraVolumes:
+        - name: redis-data
+          emptyDir: {}
+      extraVolumeMounts:
+        - name: redis-data
+          mountPath: /data
+nginx-ingress:
+  enabled: false
+
+certmanager-issuer:
+  install: true
+  installCRDs: true
+  email: "dummy@gitlab.local"
+
+gitlab:
+  initialRootPassword:
+    secret: gitlab-initial-root-password
+  webservice:
+    ingress:
+      tls:
+        secretName: gitlab-tls
+
+gitlab-runner:
+  install: false 
+
+prometheus:
+  install: false
+grafana:
+  enabled: false
+registry:
+  enabled: true

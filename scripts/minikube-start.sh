@@ -5,20 +5,18 @@ minikube stop --profile=first-pet 2>/dev/null
 echo "Starting Minikube with 2 nodes..."
 minikube start \
   --cpus=4 \
-  --memory=8192 \
-  --disk-size=50g \
+  --memory=6144 \
+  --disk-size=30g \
   --nodes=2 \
   --driver=docker \
   --profile=first-pet \
-  --addons=ingress,storage-provisioner,metrics-server
+  --addons=ingress,csi-hostpath-driver,metrics-server
 
 echo "Checking Minikube status..."
 minikube status --profile=first-pet
 
-echo "Enabling addons..."
-minikube addons enable ingress --profile=first-pet
-minikube addons enable storage-provisioner --profile=first-pet
-minikube addons enable metrics-server --profile=first-pet
+echo "Setting csi-hostpath-sci as default storage class..."
+kubectl patch storageclass csi-hostpath-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
 MINIKUBE_IP=$(minikube ip --profile=first-pet)
 echo "Minikube IP: $MINIKUBE_IP"
