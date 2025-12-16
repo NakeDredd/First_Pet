@@ -9,3 +9,4 @@ k8s_cluster.tfvars
 gitlab/config
 gitlab/data
 gitlab/logs
+.vscode/settings.json
