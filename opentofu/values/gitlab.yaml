@@ -47,7 +47,7 @@ gitlab:
   webservice:
     ingress:
       tls:
-        secretName: gitlab-tls
+        secretName: gitlab-tls2
 
 gitlab-runner:
   install: false 
