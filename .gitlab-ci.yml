@@ -5,6 +5,10 @@ stages:
 
 build-job:      
   stage: build
+  image: docker-cli
+  services:
+  - docker:dind
+
   script:
     - docker build ./src/date-server/
 
