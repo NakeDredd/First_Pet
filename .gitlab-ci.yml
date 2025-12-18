@@ -11,7 +11,7 @@ build-job:
   - docker:dind
 
   before_script:
-    - docker login -u fnaerm -p $GITLAB_PASSWORD registry.gitlab.com
+    - docker login -u fnaferm --password-stdin $GITLAB_PASSWORD registry.gitlab.com
   script:
     - echo "1/3 Building microservices date-server"
     - docker build -t $IMAGE_NAME:date-server ./src/date-server/
