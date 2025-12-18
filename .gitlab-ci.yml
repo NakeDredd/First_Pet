@@ -15,9 +15,9 @@ build-job:
       - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo "1/3 Building microservices date-server"
-    - docker build -t $REGISTRY/date-server:dev ./src/date-server/
+    - docker build -t $CI_REGISTRY/date-server:dev ./src/date-server/
     - echo "Pushing..."
-    - docker push $REGISTRY/date-server:dev
+    - docker push $CI_REGISTRY/date-server:dev
 
     
 
