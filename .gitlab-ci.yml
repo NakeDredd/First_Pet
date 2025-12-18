@@ -2,7 +2,6 @@ stages:
   - build
 
 variables:
-  PROJECT: first_pet
   CI_REGISTRY: registry.gitlab.com/learning3792551
 
 
@@ -16,9 +15,9 @@ build-job:
       - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo "1/3 Building microservices date-server"
-    - docker build -t $REGISTRY/$PROJECT/date-server:dev ./src/date-server/
+    - docker build -t $REGISTRY/date-server:dev ./src/date-server/
     - echo "Pushing..."
-    - docker push $REGISTRY/$PROJECT/date-server:dev
+    - docker push $REGISTRY/date-server:dev
 
     
 
