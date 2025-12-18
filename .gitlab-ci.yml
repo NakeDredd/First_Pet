@@ -19,5 +19,15 @@ build-job:
     - echo "Pushing..."
     - docker push $CI_REGISTRY/date-server:dev
 
+    - echo "2/3 Building microservices public-endpoint"
+    - docker build -t $CI_REGISTRY/public-endpoint:dev ./src/public-endpoint/
+    - echo "Pushing..."
+    - docker push $CI_REGISTRY/public-endpoint:dev
+
+    - echo "3/3 Building microservices timezone-converter"
+    - docker build -t $CI_REGISTRY/timezone-converter:dev ./src/timezone-converter/
+    - echo "Pushing..."
+    - docker push $CI_REGISTRY/timezone-converter:dev
+
     
 
