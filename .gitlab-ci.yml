@@ -3,7 +3,7 @@ stages:
 
 variables:
   PROJECT: first_pet
-  REGISTRY: registry.gitlab.com/learning3792551
+  CI_REGISTRY: registry.gitlab.com/learning3792551
 
 
 build-job:      
@@ -13,7 +13,7 @@ build-job:
   - docker:dind
 
   before_script:
-    - echo "$CI_JOB_TOKEN" | docker login -u fnaferm --password-stdin registry.gitlab.com
+      - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo "1/3 Building microservices date-server"
     - docker build -t $REGISTRY/$PROJECT/date-server:dev ./src/date-server/
