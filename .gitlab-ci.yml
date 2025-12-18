@@ -2,7 +2,7 @@ stages:
   - build
 
 variables:
-  CI_REGISTRY: registry.gitlab.com/learning3792551
+  CI_REGISTRY: registry.gitlab.com/learning3792551/first_pet
 
 
 build-job:      
