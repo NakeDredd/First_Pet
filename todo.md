@@ -4,10 +4,10 @@ Install cert-manager for TLS {cm:2025-12-16}
 Setup storage provisioner {cm:2025-12-16}
 
 Deploy GitLab via official Helm chart {cm:2025-12-16} 
-Configure GitLab CI/CD
+Configure GitLab CI/CD {cm:2025-12-18}
 
 Implement Kafka in microservices C
-reate Kubernetes manifests for microservices 
+Create Kubernetes manifests for microservices 
 Setup GitLab CI/CD pipelines for microservices
 
 Deploy Prometheus Stack via Helm 
