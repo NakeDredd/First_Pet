@@ -23,7 +23,7 @@ build-job:
   - docker:dind
 
   before_script:
-      - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+      - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin 
   script:
     - echo "1/3 Building microservices date-server"
     - docker build -t $CI_REGISTRY/date-server:dev ./src/date-server/

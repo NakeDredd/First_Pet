@@ -1,4 +1,5 @@
 services:
+  
   gitlab-server:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab-server
