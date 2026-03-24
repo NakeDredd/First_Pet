@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: timezone-converter-deployment
+  labels:
+    app: timezone-converter
+spec:
+  replicas: 1
+  selector:
+    app : timezone-converter
+  template:
+    metadata:
+      labels:
+        app : timezone-converter
+    spec:
+      containers:
+        - name: timezone-converter
+          image: registry.gitlab.com/learning3792551/first_pet/timezone-converter
+          ports: 
+           - containerPort: 5001

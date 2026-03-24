@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: public-endpoint-deployment
+  labels:
+    app: public-endpoint
+spec:
+  replicas: 1
+  selector:
+    app : public-endpoint
+  template:
+    metadata:
+      labels:
+        app : public-endpoint
+    spec:
+      containers:
+        - name: public-endpoint
+          image: registry.gitlab.com/learning3792551/first_pet/public-endpoint
+          ports: 
+           - containerPort: 5002
