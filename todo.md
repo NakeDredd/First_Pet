@@ -1,10 +1,10 @@
-Configure Minikube with Terraform {cm:2025-12-16} 
-Install nginx-ingress via Helm/Terraform {cm:2025-12-16} 
-Install cert-manager for TLS {cm:2025-12-16} 
-Setup storage provisioner {cm:2025-12-16}
+DONE Configure Minikube with Terraform 
+DONE Install nginx-ingress via Helm/Terraform 
+DONE Install cert-manager for TLS 
+DONE Setup storage provisioner 
 
-Deploy GitLab via official Helm chart {cm:2025-12-16} 
-Configure GitLab CI/CD {cm:2025-12-18}
+SKIPPED Deploy GitLab via official Helm chart 
+DONE Configure GitLab CI/CD 
 
 Implement Kafka in microservices C
 Create Kubernetes manifests for microservices 
