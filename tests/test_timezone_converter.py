@@ -1,31 +1,20 @@
 import pytest
 import sys
 import os
-from unittest.mock import patch, Mock
+from unittest.mock import MagicMock, patch, Mock
+from queue import Queue
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '../src/timezone-converter'))
+sys.path.insert(0, os.path.join(current_dir, "../src/timezone-converter"))
 
-from timezone_converter import app as flask_app
 
-@pytest.fixture
-def app():
-    flask_app.config['TESTING'] = True
-    return flask_app
+def test_convert_to_moscow():
+    with patch.dict("sys.modules", {"kafka_helper": MagicMock()}):
+        from timezone_converter import convert_to_moscow
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
+        input_date = "2024-01-20T15:30:00+07:00"
+        result = convert_to_moscow(input_date)
 
-@patch('timezone_converter.requests.get')
-def test_converter_endpoint(mock_get, client):
-    mock_response = Mock()
-    mock_response.json.return_value = {'date': '2024-01-20T15:30:00+07:00'}
-    mock_get.return_value = mock_response
-    
-    response = client.get('/convert')
-    assert response.status_code == 200
-    data = response.get_json()
-    assert 'original_date' in data
-    assert 'tomsk_time' in data
-    assert 'moscow_time' in data
+        assert isinstance(result, str)
+        assert "T" in result
+        assert "+03:00" in result

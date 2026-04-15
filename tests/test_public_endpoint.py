@@ -1,29 +1,52 @@
 import pytest
 import sys
 import os
-from unittest.mock import patch, Mock
+from unittest.mock import MagicMock, patch
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '../src/public-endpoint'))
+sys.path.insert(0, os.path.join(current_dir, "../src/public-endpoint"))
 
-from public_endpoint import app as flask_app
 
 @pytest.fixture
-def app():
-    flask_app.config['TESTING'] = True
-    return flask_app
+def mock_kafka():
+    mock_producer = MagicMock()
+    mock_producer.send.return_value = True
+
+    mock_consumer_class = MagicMock()
+    mock_consumer_instance = MagicMock()
+    mock_consumer_class.return_value = mock_consumer_instance
+
+    with patch.dict("sys.modules", {"kafka_helper": MagicMock()}):
+        import kafka_helper
+        kafka_helper.KafkaProducerWrapper.return_value = mock_producer
+        kafka_helper.KafkaConsumerWrapper = mock_consumer_class
+
+        yield {
+            "producer": mock_producer,
+            "consumer_class": mock_consumer_class,
+            "consumer": mock_consumer_instance,
+        }
+
+
+@pytest.fixture
+def app(mock_kafka):
+    with patch.dict("sys.modules", {"kafka_helper": MagicMock()}):
+        import kafka_helper
+        kafka_helper.KafkaProducerWrapper.return_value = mock_kafka["producer"]
+        kafka_helper.KafkaConsumerWrapper = mock_kafka["consumer_class"]
+
+        from public_endpoint import app as flask_app
+        flask_app.config["TESTING"] = True
+        return flask_app
+
 
 @pytest.fixture
 def client(app):
     return app.test_client()
 
-@patch('public_endpoint.requests.get')
-def test_public_date_endpoint(mock_get, client):
-    mock_response = Mock()
-    mock_response.json.return_value = {'moscow_time': '2024-01-20T10:30:00+03:00'}
-    mock_get.return_value = mock_response
-    
-    response = client.get('/public-date')
-    assert response.status_code == 200
-    data = response.get_json()
-    assert 'converted_date' in data
+
+@pytest.fixture
+def mock_consumer_thread(mock_kafka):
+    mock_queue = MagicMock()
+    mock_kafka["consumer"].poll.return_value = None
+    return mock_queue

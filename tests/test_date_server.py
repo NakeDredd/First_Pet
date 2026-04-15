@@ -1,31 +1,23 @@
 import pytest
 import sys
 import os
+from unittest.mock import MagicMock, patch
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '../src/date-server'))
+sys.path.insert(0, os.path.join(current_dir, "../src/date-server"))
 
-from date_server import app as flask_app
+with patch.dict("sys.modules", {
+    "kafka_helper": MagicMock(),
+}):
+    from date_server import get_current_date
 
-@pytest.fixture
-def app():
-    flask_app.config['TESTING'] = True
-    return flask_app
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
+def test_get_current_date_returns_iso_format():
+    date_str = get_current_date()
+    assert isinstance(date_str, str)
+    assert "T" in date_str
 
-def test_date_endpoint_exists(client):
-    response = client.get('/date')
-    assert response.status_code == 200
 
-def test_date_returns_json(client):
-    response = client.get('/date')
-    assert response.content_type == 'application/json'
-
-def test_date_has_correct_structure(client):
-    response = client.get('/date')
-    data = response.get_json()
-    assert 'date' in data
-    assert isinstance(data['date'], str)
+def test_get_current_date_contains_timezone_info():
+    date_str = get_current_date()
+    assert "+" in date_str or "Z" in date_str or "+00:00" in date_str
